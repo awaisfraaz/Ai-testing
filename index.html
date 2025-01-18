@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #4a5568;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            background: #5a67d8;
+        }
+
+        .result {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f7fafc;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .result p {
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+            color: #4a5568;
+        }
+
+        .result span {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .debug {
+            margin-top: 1rem;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GPA Calculator</h1>
+        <form id="gpaForm">
+            <div class="form-group">
+                <label for="dsa">DSA Marks (4 credit hours)</label>
+                <input type="number" id="dsa" min="0" max="100" required>
+            </div>
+            <div class="form-group">
+                <label for="cn">CN Marks (4 credit hours)</label>
+                <input type="number" id="cn" min="0" max="100" required>
+            </div>
+            <div class="form-group">
+                <label for="pom">POM Marks (3 credit hours)</label>
+                <input type="number" id="pom" min="0" max="100" required>
+            </div>
+            <div class="form-group">
+                <label for="se">SE Marks (3 credit hours)</label>
+                <input type="number" id="se" min="0" max="100" required>
+            </div>
+            <div class="form-group">
+                <label for="trw">TRW Skills Marks (3 credit hours)</label>
+                <input type="number" id="trw" min="0" max="100" required>
+            </div>
+            <div class="form-group">
+                <label for="calculus">Calculus Marks (3 credit hours)</label>
+                <input type="number" id="calculus" min="0" max="100" required>
+            </div>
+            <div class="form-group">
+                <label for="previousCGPA">Previous CGPA</label>
+                <input type="number" id="previousCGPA" min="0" max="4" step="0.01" required>
+            </div>
+            <button type="submit">Calculate GPA</button>
+        </form>
+        <div class="result" id="result">
+            <p>Current GPA: <span id="gpa">-</span></p>
+            <p>New CGPA: <span id="cgpa">-</span></p>
+        </div>
+        <div class="debug" id="debug"></div>
+    </div>
+
+    <script>
+        function calculateSubGPA(marks) {
+            if (marks >= 80 && marks <= 100) return 4.00;
+            if (marks === 79) return 3.94;
+            if (marks === 78) return 3.87;
+            if (marks === 77) return 3.80;
+            if (marks === 76) return 3.74;
+            if (marks === 75) return 3.67;
+            if (marks === 74) return 3.60;
+            if (marks === 73) return 3.54;
+            if (marks === 72) return 3.47;
+            if (marks === 71) return 3.40;
+            if (marks === 70) return 3.34;
+            if (marks === 69) return 3.27;
+            if (marks === 68) return 3.20;
+            if (marks === 67) return 3.14;
+            if (marks === 66) return 3.07;
+            if (marks === 65) return 3.00;
+            if (marks === 64) return 2.92;
+            if (marks === 63) return 2.85;
+            if (marks === 62) return 2.78;
+            if (marks === 61) return 2.70;
+            if (marks === 60) return 2.64;
+            if (marks === 59) return 2.57;
+            if (marks === 58) return 2.50;
+            if (marks === 57) return 2.43;
+            if (marks === 56) return 2.36;
+            if (marks === 55) return 2.30;
+            if (marks === 54) return 2.24;
+            if (marks === 53) return 2.18;
+            if (marks === 52) return 2.12;
+            if (marks === 51) return 2.06;
+            if (marks === 50) return 2.00;
+            if (marks === 49) return 1.90;
+            if (marks === 48) return 1.80;
+            if (marks === 47) return 1.70;
+            if (marks === 46) return 1.60;
+            if (marks === 45) return 1.50;
+            if (marks === 44) return 1.40;
+            if (marks === 43) return 1.30;
+            if (marks === 42) return 1.20;
+            if (marks === 41) return 1.10;
+            if (marks === 40) return 1.00;
+            return 0.00;
+        }
+
+        document.getElementById('gpaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get input values
+            const dsa = Number(document.getElementById('dsa').value);
+            const cn = Number(document.getElementById('cn').value);
+            const pom = Number(document.getElementById('pom').value);
+            const se = Number(document.getElementById('se').value);
+            const trw = Number(document.getElementById('trw').value);
+            const calculus = Number(document.getElementById('calculus').value);
+            const previousCGPA = Number(document.getElementById('previousCGPA').value);
+
+            // Calculate individual GPAs
+            const dsaGPA = calculateSubGPA(dsa);
+            const cnGPA = calculateSubGPA(cn);
+            const pomGPA = calculateSubGPA(pom);
+            const seGPA = calculateSubGPA(se);
+            const trwGPA = calculateSubGPA(trw);
+            const calculusGPA = calculateSubGPA(calculus);
+
+            // Debug information
+            const debugInfo = {
+                "DSA": { marks: dsa, gpa: dsaGPA, creditHours: 4.0 },
+                "CN": { marks: cn, gpa: cnGPA, creditHours: 4.0 },
+                "POM": { marks: pom, gpa: pomGPA, creditHours: 3.0 },
+                "SE": { marks: se, gpa: seGPA, creditHours: 3.0 },
+                "TRW": { marks: trw, gpa: trwGPA, creditHours: 3.0 },
+                "Calculus": { marks: calculus, gpa: calculusGPA, creditHours: 3.0 }
+            };
+
+            // Calculate weighted sum
+            const totalCreditHours = 20.0;
+            const weightedSum = (
+                (4.0 * dsaGPA) +
+                (4.0 * cnGPA) +
+                (3.0 * pomGPA) +
+                (3.0 * seGPA) +
+                (3.0 * trwGPA) +
+                (3.0 * calculusGPA)
+            );
+
+            // Calculate GPA
+            const gpa = weightedSum / totalCreditHours;
+            const cgpa = (gpa + previousCGPA) / 2;
+
+            // Display results
+            document.getElementById('gpa').textContent = gpa.toFixed(2);
+            document.getElementById('cgpa').textContent = cgpa.toFixed(2);
+
+            // Show debug information
+            const debugDiv = document.getElementById('debug');
+            debugDiv.innerHTML = `
+                <p>Debug Information:</p>
+                <pre>${JSON.stringify(debugInfo, null, 2)}</pre>
+                <p>Weighted Sum: ${weightedSum.toFixed(2)}</p>
+                <p>Total Credit Hours: ${totalCreditHours}</p>
+            `;
+        });
+    </script>
+</body>
+</html>
